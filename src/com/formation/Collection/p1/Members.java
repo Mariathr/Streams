@@ -17,13 +17,14 @@ public class Members{
         List<Persone> personeList = new ArrayList<>();
         Path path = Paths.get("file/personnes.txt");
         try (Stream<String> streamlist = Files.lines(path)) {
-            streamlist
-                  .filter(line->!line.startsWith("PRENOM")  )
-                    .filter(line->!line.startsWith("Baptiste")  )
-                   .map(ligne -> ligne.split(","))
-                   // .map(p -> new Persone(p[0].trim(), p[1].trim(), Integer.parseInt(p[2].trim()), Double.parseDouble(p[3].trim()), p[4].trim(), p[5].trim()))
-                    .collect(Collectors.toList())
-                    .forEach(p-> personeList.add(new Persone(p[0].trim(), p[1].trim(), Integer.parseInt(p[2].trim()),Double.parseDouble(p[3].trim()), p[4].trim(), p[5].trim())));
+            personeList= streamlist
+                    .skip(1)
+                    .map(ligne -> ligne.split(","))
+                  //  .map()
+                  // .filter(p->p[4].equalsIgnoreCase("f"))
+                   .map(p -> new Persone(p[0].trim(), p[1].trim(), Integer.parseInt(p[2].trim()), Double.parseDouble(p[3].trim()), p[4].trim(), p[5].trim()))
+                    .collect(Collectors.toList());
+                 //.forEach(p-> personeList.add(new Persone(p[0].trim(), p[1].trim(), Integer.parseInt(p[2].trim()),Double.parseDouble(p[3].trim()), p[4].trim(), p[5].trim())));
         }
         catch (IOException e) {
             e.printStackTrace();
@@ -78,14 +79,14 @@ public class Members{
     }
     public void genreLettref(){
         personeList.stream()
-                .filter( p -> p.getGenre() == "F" && p.getNom().substring(0,1).equalsIgnoreCase("j") )
+                .filter( p -> p.getGenre().equalsIgnoreCase("F") && p.getNom().substring(0,1).equalsIgnoreCase("j") )
                 .forEach(info -> System.out.println(info.toString()));
     }
     public void genreMinuscule(){
        personeList.stream()
-                .filter( p -> p.getGenre().equalsIgnoreCase("h"))
+                //.filter( p -> p.getGenre().equalsIgnoreCase("h"))
                 .forEach(info -> { info.setGenre(info.getGenre().toLowerCase());
-                                  System.out.println(info.toString());} );
+                                  if(info.getGenre().equalsIgnoreCase("h")) System.out.println(info.toString());} );
 
 
     }
