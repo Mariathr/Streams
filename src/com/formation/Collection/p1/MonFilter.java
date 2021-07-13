@@ -5,4 +5,5 @@ import java.util.function.IntPredicate;
 
 public interface MonFilter extends IntPredicate  {
 
+
 }

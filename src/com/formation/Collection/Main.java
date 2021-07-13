@@ -51,7 +51,6 @@ public class Main {
 
 */
         ///  Exercice 3
-
       Members members = new Members();
        /* members.apres1991();
         members.nom1995();
@@ -62,7 +61,6 @@ public class Main {
          members.laPlusJeune();
          members.moyenneSalaires();*/
         members.genreMinuscule();
-
 
     }
     public static void  afficherPositif(int[] tabnum,  MonFilter monFilter){

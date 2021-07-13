@@ -45,7 +45,6 @@ public class Members{
 
         */
         this.personeList=personeList;
-
     }
 
     public List<Persone> listPersone(){
