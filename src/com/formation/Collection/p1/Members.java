@@ -19,15 +19,11 @@ public class Members{
         try (Stream<String> streamlist = Files.lines(path)) {
             streamlist
                   .filter(line->!line.startsWith("PRENOM")  )
+                    .filter(line->!line.startsWith("Baptiste")  )
                    .map(ligne -> ligne.split(","))
+                   // .map(p -> new Persone(p[0].trim(), p[1].trim(), Integer.parseInt(p[2].trim()), Double.parseDouble(p[3].trim()), p[4].trim(), p[5].trim()))
                     .collect(Collectors.toList())
-                   .forEach(p-> personeList.add(
-                           new Persone(p[0].trim(),
-                                   p[1].trim(),
-                                   Integer.parseInt(p[2].trim()),
-                                   Double.parseDouble(p[3].trim()),
-                                   p[4].trim(),
-                                   p[5].trim())));
+                    .forEach(p-> personeList.add(new Persone(p[0].trim(), p[1].trim(), Integer.parseInt(p[2].trim()),Double.parseDouble(p[3].trim()), p[4].trim(), p[5].trim())));
         }
         catch (IOException e) {
             e.printStackTrace();
@@ -87,11 +83,25 @@ public class Members{
     }
     public void genreMinuscule(){
        personeList.stream()
-              //  .filter( p -> p.getGenre().equalsIgnoreCase("h"))
-                .collect(Collectors.toList())
+                .filter( p -> p.getGenre().equalsIgnoreCase("h"))
                 .forEach(info -> { info.setGenre(info.getGenre().toLowerCase());
                                   System.out.println(info.toString());} );
 
+
+    }
+    public void laPlusJeune(){
+        Optional<Persone> persone =  personeList.stream()
+                  .min(Comparator.comparing(Persone::getAnnee_naissance));
+
+        System.out.println(persone);
+
+    }
+    public void moyenneSalaires (){
+   OptionalDouble mSalary=  personeList.stream()
+                 .filter(p->p.getVille().equalsIgnoreCase("Lyon"))
+                .mapToDouble(Persone::getSalary).average();
+
+        System.out.println(mSalary);
 
     }
 }
